@@ -20,7 +20,7 @@ dotenv.config({path: './config/config.env'})
 connectDB()
 
 // Route files
-//const plants = require("./routes/plants")
+const dailies = require("./routes/dailies")
 //const auth = require("./routes/auth")
 //const searchPlants = require("./routes/searchPlants")
 
@@ -63,7 +63,7 @@ app.use(hpp())
 app.use(cors())
 
 // Mount routers
-//app.use("/api/v1/auth", auth)
+app.use("/api/v1/dailies", dailies)
 //app.use("/api/v1/plants", plants)
 //app.use("/api/v1/searchPlants",searchPlants)
 
