@@ -13,6 +13,8 @@ const cors = require("cors")
 
 
 
+
+
 // Load env vars 
 dotenv.config({path: './config/config.env'})
 
@@ -21,8 +23,8 @@ connectDB()
 
 // Route files
 const dailies = require("./routes/dailies")
-//const auth = require("./routes/auth")
-//const searchPlants = require("./routes/searchPlants")
+const auth = require("./routes/auth")
+const userDailies = require("./routes/userDaily")
 
 
 const app = express()
@@ -30,6 +32,8 @@ const app = express()
 // Body parser 
 app.use(express.json())
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
 
 // Dev logging middleware
 if(process.env.NODE_ENV === 'development'){
@@ -64,8 +68,11 @@ app.use(cors())
 
 // Mount routers
 app.use("/api/v1/dailies", dailies)
-//app.use("/api/v1/plants", plants)
-//app.use("/api/v1/searchPlants",searchPlants)
+app.use("/api/v1/auth", auth)
+app.use("/api/v1/userDailies",userDailies)
+app.use("/api/v1/privacy",(req,res)=>{
+    res.render("pages/privacy")
+})
 
 app.use(errorHandler)
 

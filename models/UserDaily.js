@@ -7,11 +7,11 @@ const UserDaily = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    daily:{
+    dailies: [{
         type: mongoose.Schema.ObjectId,
         ref: 'Daily',
         required: true
-    },
+    }],
 
   createdAt: {
       type: Date,

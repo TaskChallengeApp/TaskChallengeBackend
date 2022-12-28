@@ -7,7 +7,7 @@ const asyncHandler = require("../middlewares/async")
 // @route   GET /api/v1/dailies
 // @access  Public
 exports.getDailies = asyncHandler(async (req, res, next) =>{
-    const dailies = await Daily.find()
+    const dailies = await Daily.find({"isBase":true})
 
     res.status(200).json({
         success: true, data: dailies
@@ -39,6 +39,9 @@ exports.createDaily = asyncHandler(async (req, res, next) =>{
 // @route   PUT /api/v1/dailies/:id
 // @access  Private
 exports.updateDaily = asyncHandler(async (req, res, next) =>{
+
+    console.log(req.body)
+
     const daily = await Daily.findByIdAndUpdate(req.params.id, req.body,{
         new:true,
         runValidators:true
@@ -56,11 +59,12 @@ exports.updateDaily = asyncHandler(async (req, res, next) =>{
 // @route   DELETE /api/v1/daily/:id
 // @access  Private
 exports.deleteDaily = asyncHandler(async (req, res, next) =>{
+
     const daily = await Daily.findByIdAndDelete(req.params.id)
 
     if(!daily){
         return next(new ErrorResponse(`Daily not found with id of ${req.params.id}`,404))
     }
 
-    res.status(200).json({success: true, data: {}})
+    res.status(200).json({success: true, data : daily})
 })
